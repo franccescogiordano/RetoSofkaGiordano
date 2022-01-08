@@ -7,6 +7,7 @@
     <class>CLASES.categorias</class>
     <class>CLASES.rondas</class>
     <class>CLASES.dificultad</class>
+    <class>CLASES.participa</class>
     <properties>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/retoDB?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
