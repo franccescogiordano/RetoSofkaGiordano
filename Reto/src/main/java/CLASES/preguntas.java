@@ -6,10 +6,12 @@
 package CLASES;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  *
@@ -18,10 +20,21 @@ import javax.persistence.Id;
 @Entity
 public class preguntas implements Serializable {
 
+    @ManyToMany(mappedBy = "preguntas")
+    private List<jugador> jugadores;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    public List<jugador> getJugadores() {
+        return jugadores;
+    }
+
+    public void setJugadores(List<jugador> jugadores) {
+        this.jugadores = jugadores;
+    }
 
     public Long getId() {
         return id;

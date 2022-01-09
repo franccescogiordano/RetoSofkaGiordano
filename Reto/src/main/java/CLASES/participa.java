@@ -33,6 +33,39 @@ public class participa implements Serializable {
     private jugador participante; 
     @OneToOne
     private rondas rondajugada;
+
+    public int getAcumulado() {
+        return acumulado;
+    }
+
+    public void setAcumulado(int acumulado) {
+        this.acumulado = acumulado;
+    }
+
+    public String getEstadoronda() {
+        return estadoronda;
+    }
+
+    public void setEstadoronda(String estadoronda) {
+        this.estadoronda = estadoronda;
+    }
+
+    public jugador getParticipante() {
+        return participante;
+    }
+
+    public void setParticipante(jugador participante) {
+        this.participante = participante;
+    }
+
+    public rondas getRondajugada() {
+        return rondajugada;
+    }
+
+    public void setRondajugada(rondas rondajugada) {
+        this.rondajugada = rondajugada;
+    }
+    
     public Long getId() {
         return id;
     }

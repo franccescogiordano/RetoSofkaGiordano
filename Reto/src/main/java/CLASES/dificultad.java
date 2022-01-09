@@ -6,6 +6,7 @@
 package CLASES;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,34 @@ public class dificultad implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String nivel;
+    private String descripcion;
+    private List<categorias> categorias;
 
+    public String getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(String nivel) {
+        this.nivel = nivel;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public List<categorias> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<categorias> categorias) {
+        this.categorias = categorias;
+    }
+    
     public Long getId() {
         return id;
     }

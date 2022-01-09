@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -28,7 +29,9 @@ public class jugador implements Serializable {
    
    
   
-
+    @ManyToMany
+    private List<preguntas> preguntas;
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,6 +40,62 @@ public class jugador implements Serializable {
     private String nombre;
     private String usuario;
     private int rondasjugadas;
+
+    public List<participa> getParticipaciones() {
+        return participaciones;
+    }
+
+    public void setParticipaciones(List<participa> participaciones) {
+        this.participaciones = participaciones;
+    }
+
+    public List<preguntas> getPreguntas() {
+        return preguntas;
+    }
+
+    public void setPreguntas(List<preguntas> preguntas) {
+        this.preguntas = preguntas;
+    }
+
+    public Long getCodjugador() {
+        return codjugador;
+    }
+
+    public void setCodjugador(Long codjugador) {
+        this.codjugador = codjugador;
+    }
+
+    public int getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public int getRondasjugadas() {
+        return rondasjugadas;
+    }
+
+    public void setRondasjugadas(int rondasjugadas) {
+        this.rondasjugadas = rondasjugadas;
+    }
     
     public Long getId() {
         return codjugador;

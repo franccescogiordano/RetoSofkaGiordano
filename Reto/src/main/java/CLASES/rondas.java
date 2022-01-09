@@ -28,6 +28,30 @@ public class rondas implements Serializable {
     private Long id;
     private int numero_rondas;
     private int ronda_actual;
+
+    public participa getPartipacion() {
+        return partipacion;
+    }
+
+    public void setPartipacion(participa partipacion) {
+        this.partipacion = partipacion;
+    }
+
+    public int getNumero_rondas() {
+        return numero_rondas;
+    }
+
+    public void setNumero_rondas(int numero_rondas) {
+        this.numero_rondas = numero_rondas;
+    }
+
+    public int getRonda_actual() {
+        return ronda_actual;
+    }
+
+    public void setRonda_actual(int ronda_actual) {
+        this.ronda_actual = ronda_actual;
+    }
     
     
             
