@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -25,6 +26,7 @@ public class dificultad implements Serializable {
     private Long id;
     private String nivel;
     private String descripcion;
+    @OneToMany(mappedBy = "dificultad")
     private List<categorias> categorias;
 
     public String getNivel() {

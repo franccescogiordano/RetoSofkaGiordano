@@ -30,8 +30,7 @@ public class CPrincipal {
     private static class CPrincipalHolder {
 
         private static final CPrincipal INSTANCE = new CPrincipal();
-  
-        private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_Reto_jar_1.0-SNAPSHOTPU2");
+        private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_Reto_jar_1.0-SNAPSHOTPU");
         private static final EntityManager em = emf.createEntityManager();
     }
         public void persist(Object object) {
