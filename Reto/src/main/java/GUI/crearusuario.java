@@ -5,6 +5,9 @@
  */
 package GUI;
 
+import CLASES.jugador;
+import PERSISTENCIA.CPrincipal;
+
 /**
  *
  * @author franc
@@ -99,6 +102,17 @@ public class crearusuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String nombre, usuario;
+        nombre=jTextField1.getText();
+        usuario=jTextField2.getText();
+        jugador pepe=new jugador();
+        pepe.setNombre(nombre);
+        pepe.setUsuario(usuario);
+        this.dispose();
+        main alo= new main();
+        alo.setVisible(true);
+        CPrincipal.getInstance().persist(pepe);
+        main.jugadores.add(pepe);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 

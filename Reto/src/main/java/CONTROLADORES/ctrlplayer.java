@@ -21,6 +21,7 @@ public class ctrlplayer {
   EntityManager em = CPrincipal.getInstance().getEntity();
 
   public jugador getplayer(String username){
+    
         Iterator <jugador> it = main.jugadores.iterator();
         while (it.hasNext()) {
             jugador next = it.next();
@@ -31,7 +32,8 @@ public class ctrlplayer {
             }
         }
         return null;
-    }
+   
+  }
      
        public List<jugador> cargarjugadores(){
      

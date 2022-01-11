@@ -5,11 +5,14 @@
  */
 package GUI;
 
+import CLASES.dificultad;
 import CLASES.jugador;
 import CONTROLADORES.ctrlplayer;
+import CONTROLADORES.ctrlquestions;
 import PERSISTENCIA.CPrincipal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,20 +23,18 @@ public class main extends javax.swing.JFrame {
     /**
      * Creates new form main
      */
-       public static List<jugador> jugadores=null;
-       
-    
-        ctrlplayer CP = new ctrlplayer();
+    public static List<jugador> jugadores = new ArrayList<jugador>();
+    public static List<dificultad> dificultades = new ArrayList<dificultad>();
+    public static jugador usuariologeado = new jugador();
+
+    ctrlplayer CP = new ctrlplayer();
+    ctrlquestions CQ = new ctrlquestions();
+    public static jugador player = new jugador();
 
     public main() {
         initComponents();
-       jugadores=CP.cargarjugadores();
-    jugador player1=new jugador();
-    player1.setNombre("Franccesco");
-    player1.setUsuario("superfranccesco");
-          CPrincipal.getInstance().persist(player1);
-           jugadores.add(player1);
-           
+        jugadores = CP.cargarjugadores();
+        dificultades = CQ.listadodifis();
     }
 
     /**
@@ -71,7 +72,6 @@ public class main extends javax.swing.JFrame {
         jLabel3.setText("Usuario:");
 
         jtxtusername.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jtxtusername.setText(" ");
 
         jButton2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton2.setText("Registrarse");
@@ -122,19 +122,26 @@ public class main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String username=jtxtusername.getText();
-        jugador player=CP.getplayer(username);
-        if(player==null){
-            player = new jugador();
-            
+        String username = jtxtusername.getText();
+        player = CP.getplayer(username);
+        if (player == null) {
+
+            System.out.println("no existe fantasma");
+
+        } else {
+            menuprincipal menu = new menuprincipal();
+            menu.setVisible(true);
+            usuariologeado = player;
+            this.setVisible(false);
+
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-crearusuario crearusu = new crearusuario();
-crearusu.setVisible(true);
-this.dispose();
+        crearusuario crearusu = new crearusuario();
+        crearusu.setVisible(true);
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 

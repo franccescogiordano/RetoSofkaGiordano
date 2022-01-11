@@ -83,7 +83,7 @@ public class dificultad implements Serializable {
 
     @Override
     public String toString() {
-        return "CLASES.dificultad[ id=" + id + " ]";
+        return this.nivel;
     }
     
 }
