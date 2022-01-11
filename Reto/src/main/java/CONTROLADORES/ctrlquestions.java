@@ -5,7 +5,10 @@
  */
 package CONTROLADORES;
 
+import CLASES.categorias;
 import CLASES.dificultad;
+import GUI.crearcategoria;
+import static GUI.crearcategoria.jComboBoxDifi;
 import GUI.crearpreguntas;
 import GUI.main;
 import PERSISTENCIA.CPrincipal;
@@ -20,8 +23,10 @@ import javax.swing.JOptionPane;
  * @author franc
  */
 public class ctrlquestions {
-      EntityManager em = CPrincipal.getInstance().getEntity();
-        public List<dificultad> listadodifis() {
+
+    EntityManager em = CPrincipal.getInstance().getEntity();
+
+    public List<dificultad> listadodifis() {
         List<dificultad> lista = null;
         em.getTransaction().begin();
         try {
@@ -32,7 +37,18 @@ public class ctrlquestions {
         }
         return lista;
     }
-           public dificultad getdif(String difitxt) {
+   public List<categorias> listadocats() {
+        List<categorias> lista = null;
+        em.getTransaction().begin();
+        try {
+            lista = em.createNativeQuery("SELECT * FROM categorias", categorias.class).getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
+        return lista;
+    }
+    public dificultad getdif(String difitxt) {
         Iterator<dificultad> it = main.dificultades.iterator();
         while (it.hasNext()) {
             dificultad dif = it.next();
@@ -42,13 +58,13 @@ public class ctrlquestions {
         }
         return null;
     }
-           
-               public void CargarCBoxDificultades() {
-        DefaultComboBoxModel mdl = (DefaultComboBoxModel) crearpreguntas.cboxdificultad.getModel();
-       mdl.removeAllElements();
+
+    public void CargarCBoxDificultades() {
+        DefaultComboBoxModel mdl = (DefaultComboBoxModel) crearcategoria.jComboBoxDifi.getModel();
+        mdl.removeAllElements();
         mdl.addElement("---Seleccionar Dificultad---");
         if (main.dificultades.isEmpty()) {
-          
+
         } else {
             Iterator<dificultad> it = main.dificultades.iterator();
             while (it.hasNext()) {
@@ -56,5 +72,17 @@ public class ctrlquestions {
             }
         }
     }
+  public void CargarCBoxCategorias() {
+        DefaultComboBoxModel mdl = (DefaultComboBoxModel) crearcategoria.jComboBoxDifi.getModel();
+        mdl.removeAllElements();
+        mdl.addElement("---Seleccionar Categoria---");
+        if (main.dificultades.isEmpty()) {
 
+        } else {
+            Iterator<dificultad> it = main.dificultades.iterator();
+            while (it.hasNext()) {
+                mdl.addElement(it.next());
+            }
+        }
+    }
 }

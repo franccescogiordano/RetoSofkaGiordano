@@ -5,18 +5,26 @@
  */
 package GUI;
 
+import CLASES.jugador;
+
 /**
  *
  * @author franc
  */
 public class menuprincipal extends javax.swing.JFrame {
 
+    jugador player;
     /**
      * Creates new form menuprincipal
      */
-    public menuprincipal() {
+    public menuprincipal(jugador player) {
     initComponents();
-    jLabel1.setText(main.usuariologeado.getNombre());
+    this.player=player;
+    jLabel1.setText(player.getNombre());
+    }
+
+    private menuprincipal() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**

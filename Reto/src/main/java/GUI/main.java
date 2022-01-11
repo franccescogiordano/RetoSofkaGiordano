@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import CLASES.categorias;
 import CLASES.dificultad;
 import CLASES.jugador;
 import CONTROLADORES.ctrlplayer;
@@ -25,6 +26,7 @@ public class main extends javax.swing.JFrame {
      */
     public static List<jugador> jugadores = new ArrayList<jugador>();
     public static List<dificultad> dificultades = new ArrayList<dificultad>();
+    public static List<categorias> cats = new ArrayList<categorias>();
     public static jugador usuariologeado = new jugador();
 
     ctrlplayer CP = new ctrlplayer();
@@ -126,12 +128,12 @@ public class main extends javax.swing.JFrame {
         player = CP.getplayer(username);
         if (player == null) {
 
-            System.out.println("no existe fantasma");
+            System.out.println("no existe fantasma, igual que el Rodro");
 
         } else {
-            menuprincipal menu = new menuprincipal();
+            menuprincipal menu = new menuprincipal(player);
             menu.setVisible(true);
-            usuariologeado = player;
+          //  usuariologeado = player;
             this.setVisible(false);
 
         }

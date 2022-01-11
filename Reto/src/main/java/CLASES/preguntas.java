@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -20,9 +21,64 @@ import javax.persistence.ManyToMany;
 @Entity
 public class preguntas implements Serializable {
 
-    @ManyToMany(mappedBy = "preguntas")
+    @ManyToMany(mappedBy = "preguntass")
     private List<jugador> jugadores;
+    private String pregunta;
+    private String respuestac;
+    private String respuesta1;
+    private String respuesta2;
+    private String respuesta3;
+    @ManyToOne
+    private categorias categoria;
 
+    public categorias getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(categorias categoria) {
+        this.categoria = categoria;
+    }
+    
+    public String getPregunta() {
+        return pregunta;
+    }
+
+    public void setPregunta(String pregunta) {
+        this.pregunta = pregunta;
+    }
+
+    public String getRespuestac() {
+        return respuestac;
+    }
+
+    public void setRespuestac(String respuestac) {
+        this.respuestac = respuestac;
+    }
+
+    public String getRespuesta1() {
+        return respuesta1;
+    }
+
+    public void setRespuesta1(String respuesta1) {
+        this.respuesta1 = respuesta1;
+    }
+
+    public String getRespuesta2() {
+        return respuesta2;
+    }
+
+    public void setRespuesta2(String respuesta2) {
+        this.respuesta2 = respuesta2;
+    }
+
+    public String getRespuesta3() {
+        return respuesta3;
+    }
+
+    public void setRespuesta3(String respuesta3) {
+        this.respuesta3 = respuesta3;
+    }
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

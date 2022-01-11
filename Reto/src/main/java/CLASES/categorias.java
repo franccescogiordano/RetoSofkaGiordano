@@ -6,11 +6,13 @@
 package CLASES;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -19,8 +21,27 @@ import javax.persistence.ManyToOne;
 @Entity
 public class categorias implements Serializable {
 
+    @OneToMany(mappedBy = "categoria")
+    private List<preguntas> preguntass;
+
+    public List<preguntas> getPreguntass() {
+        return preguntass;
+    }
+
+    public void setPreguntass(List<preguntas> preguntass) {
+        this.preguntass = preguntass;
+    }
+
     @ManyToOne
     private dificultad dificultad;
+
+    public dificultad getDificultad() {
+        return dificultad;
+    }
+
+    public void setDificultad(dificultad dificultad) {
+        this.dificultad = dificultad;
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
