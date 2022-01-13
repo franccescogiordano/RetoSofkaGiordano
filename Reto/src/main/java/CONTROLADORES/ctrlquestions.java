@@ -62,7 +62,7 @@ public class ctrlquestions {
     public void CargarCBoxDificultades() {
         DefaultComboBoxModel mdl = (DefaultComboBoxModel) crearcategoria.jComboBoxDifi.getModel();
         mdl.removeAllElements();
-        mdl.addElement("---Seleccionar Dificultad---");
+        mdl.addElement("--Seleccionar Dificultad--");
         if (main.dificultades.isEmpty()) {
 
         } else {
@@ -73,13 +73,13 @@ public class ctrlquestions {
         }
     }
   public void CargarCBoxCategorias() {
-        DefaultComboBoxModel mdl = (DefaultComboBoxModel) crearcategoria.jComboBoxDifi.getModel();
+        DefaultComboBoxModel mdl = (DefaultComboBoxModel) crearpreguntas.jComboBoxCategorias.getModel();
         mdl.removeAllElements();
-        mdl.addElement("---Seleccionar Categoria---");
-        if (main.dificultades.isEmpty()) {
+        mdl.addElement("--Seleccionar Categoria--");
+        if (main.cats.isEmpty()) {
 
         } else {
-            Iterator<dificultad> it = main.dificultades.iterator();
+            Iterator<categorias> it = main.cats.iterator();
             while (it.hasNext()) {
                 mdl.addElement(it.next());
             }

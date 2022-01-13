@@ -22,11 +22,12 @@ public class crearpreguntas extends javax.swing.JFrame {
     /**
      * Creates new form crearpreguntas
      */
-     ctrlquestions CQ = new ctrlquestions();
-   public static List<preguntas> pregscat= new ArrayList<preguntas>();
+    ctrlquestions CQ = new ctrlquestions();
+    public static List<preguntas> pregscat = new ArrayList<preguntas>();
+
     public crearpreguntas() {
         initComponents();
-        CQ.CargarCBoxDificultades();
+        CQ.CargarCBoxCategorias();
     }
 
     /**
@@ -159,34 +160,33 @@ public class crearpreguntas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String p,r,r1,r2,r3;
-       p=txtpregunta.getText();
-       r=txtrespuestacorrecta.getText();
-       r1=txtrespuestaerronea1.getText();
-       r2=txtrespuestaerronea2.getText();
-       r3=txtrespuestaerronea3.getText();
-       preguntas pregunta= new preguntas();
-       pregunta.setPregunta(p);
-       pregunta.setRespuestac(r);
-       pregunta.setRespuesta1(r1);
-       pregunta.setRespuesta2(r2);
-       pregunta.setRespuesta3(r3);
-       pregunta.setCategoria((categorias) jComboBoxCategorias.getSelectedItem());
-      
-       categorias categoriaa=(categorias) jComboBoxCategorias.getSelectedItem();
-        pregscat=categoriaa.getPreguntass();
-        CPrincipal.getInstance().persist(categoriaa);
-        CPrincipal.getInstance().merge(pregscat);
-//       pregunta.set(r3);
-              // (tipo) tipocbox.getSelectedItem();
-        // TODO add your handling code here:
+        String p, r, r1, r2, r3;
+        p = txtpregunta.getText();
+        r = txtrespuestacorrecta.getText();
+        r1 = txtrespuestaerronea1.getText();
+        r2 = txtrespuestaerronea2.getText();
+        r3 = txtrespuestaerronea3.getText();
+        preguntas pregunta = new preguntas();
+        pregunta.setPregunta(p);
+        pregunta.setRespuestac(r);
+        pregunta.setRespuesta1(r1);
+        pregunta.setRespuesta2(r2);
+        pregunta.setRespuesta3(r3);
+        pregunta.setCategoria((categorias) jComboBoxCategorias.getSelectedItem());
+        categorias categoriaa = (categorias) jComboBoxCategorias.getSelectedItem();
+        pregscat = categoriaa.getPreguntass();
+        CPrincipal.getInstance().persist(pregunta);
+        pregscat = new ArrayList<preguntas>();
+        pregscat.add(pregunta);
+        categoriaa.setPreguntass(pregscat);
+        CPrincipal.getInstance().merge(categoriaa);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        crearcategoria ca= new crearcategoria();
+        crearcategoria ca = new crearcategoria();
         ca.setVisible(true);
         this.setVisible(false);
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -228,7 +228,7 @@ public class crearpreguntas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    public static javax.swing.JComboBox<String> jComboBoxCategorias;
+    public static javax.swing.JComboBox<categorias> jComboBoxCategorias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

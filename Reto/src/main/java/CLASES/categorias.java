@@ -96,7 +96,7 @@ public class categorias implements Serializable {
 
     @Override
     public String toString() {
-        return "CLASES.categorias[ id=" + id + " ]";
+        return nombre;
     }
     
 }

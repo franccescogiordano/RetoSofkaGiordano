@@ -31,12 +31,14 @@ public class main extends javax.swing.JFrame {
 
     ctrlplayer CP = new ctrlplayer();
     ctrlquestions CQ = new ctrlquestions();
+    
     public static jugador player = new jugador();
 
     public main() {
         initComponents();
         jugadores = CP.cargarjugadores();
         dificultades = CQ.listadodifis();
+        cats=CQ.listadocats();
     }
 
     /**

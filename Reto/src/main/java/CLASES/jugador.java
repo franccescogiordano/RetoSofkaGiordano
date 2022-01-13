@@ -29,6 +29,7 @@ public class jugador implements Serializable {
    
    
   
+
     @ManyToMany
     private List<preguntas> preguntas;
     

@@ -21,8 +21,11 @@ import javax.persistence.ManyToOne;
 @Entity
 public class preguntas implements Serializable {
 
-    @ManyToMany(mappedBy = "preguntass")
-    private List<jugador> jugadores;
+    @ManyToMany(mappedBy = "preguntas")
+    private List<jugador> jugadors;
+
+ 
+
     private String pregunta;
     private String respuestac;
     private String respuesta1;
@@ -85,11 +88,11 @@ public class preguntas implements Serializable {
     private Long id;
 
     public List<jugador> getJugadores() {
-        return jugadores;
+        return jugadors;
     }
 
     public void setJugadores(List<jugador> jugadores) {
-        this.jugadores = jugadores;
+        this.jugadors = jugadores;
     }
 
     public Long getId() {

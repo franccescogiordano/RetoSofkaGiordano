@@ -123,7 +123,8 @@ public class crearcategoria extends javax.swing.JFrame {
         main.cats.add(cat);
         CPrincipal.getInstance().persist(cat);
         CQ.CargarCBoxCategorias();
-         
+        crearpreguntas cp= new crearpreguntas();
+        cp.setVisible(true);
         this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
