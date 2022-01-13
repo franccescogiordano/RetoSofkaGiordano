@@ -25,22 +25,50 @@ public class participa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private int acumulado;
+    private int premioronda;
     private String estadoronda;
+    private String preguntaronda;
+    private String respuestaC;
+    private String RespuestaEelegida;
 
+    public int getPremioronda() {
+        return premioronda;
+    }
+
+    public void setPremioronda(int premioronda) {
+        this.premioronda = premioronda;
+    }
+
+    public String getPreguntaronda() {
+        return preguntaronda;
+    }
+
+    public void setPreguntaronda(String preguntaronda) {
+        this.preguntaronda = preguntaronda;
+    }
+
+    public String getRespuestaC() {
+        return respuestaC;
+    }
+
+    public void setRespuestaC(String respuestaC) {
+        this.respuestaC = respuestaC;
+    }
+
+    public String getRespuestaEelegida() {
+        return RespuestaEelegida;
+    }
+
+    public void setRespuestaEelegida(String RespuestaEelegida) {
+        this.RespuestaEelegida = RespuestaEelegida;
+    }
     
     @ManyToOne
     private jugador participante; 
     @OneToOne
     private rondas rondajugada;
 
-    public int getAcumulado() {
-        return acumulado;
-    }
 
-    public void setAcumulado(int acumulado) {
-        this.acumulado = acumulado;
-    }
 
     public String getEstadoronda() {
         return estadoronda;
