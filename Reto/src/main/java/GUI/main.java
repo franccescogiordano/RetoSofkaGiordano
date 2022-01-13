@@ -42,6 +42,7 @@ public class main extends javax.swing.JFrame {
         dificultades = CQ.listadodifis();
         cats = CQ.listadocats();
         pregs = CQ.listapreguntas();
+        cargarBD();
     }
 
     public void cargarBD() {
@@ -241,8 +242,8 @@ public class main extends javax.swing.JFrame {
         preg15.setRespuesta3("Ninguna de las anteriores");
         pregsBiologia.add(preg15);
         CPrincipal.getInstance().persist(preg15);
-        
-           //DIFICILES ---------------------------------------------------------------------------
+
+        //DIFICILES ---------------------------------------------------------------------------
         Matematica = new categorias();
         Matematica.setDificultad(Dificil);
         Matematica.setDescripcion("Preguntas sobre Matematica");
@@ -258,7 +259,7 @@ public class main extends javax.swing.JFrame {
         preg16.setRespuesta3("8");
         pregsMatematica.add(preg16);
         CPrincipal.getInstance().persist(preg16);
-        
+
         preg17 = new preguntas();
         preg17.setPregunta("¿A cuánto equivale π?");
         preg17.setRespuestac("3,141592");
@@ -267,7 +268,7 @@ public class main extends javax.swing.JFrame {
         preg17.setRespuesta3("3,144123");
         pregsMatematica.add(preg17);
         CPrincipal.getInstance().persist(preg17);
-        
+
         preg18 = new preguntas();
         preg18.setPregunta("7/5 + 2/3 - 1");
         preg18.setRespuestac("16/15");
@@ -276,7 +277,7 @@ public class main extends javax.swing.JFrame {
         preg18.setRespuesta3("1");
         pregsMatematica.add(preg18);
         CPrincipal.getInstance().persist(preg18);
-        
+
         preg19 = new preguntas();
         preg19.setPregunta("¿Que formula es esta? \n S= π x R²");
         preg19.setRespuestac("Superficie de un circulo");
@@ -285,7 +286,7 @@ public class main extends javax.swing.JFrame {
         preg19.setRespuesta3("Superficie de paralelogramos");
         pregsMatematica.add(preg19);
         CPrincipal.getInstance().persist(preg19);
-        
+
         preg20 = new preguntas();
         preg20.setPregunta("(-3)³ + (-2)³ - (-3)³ + (-1)³ =");
         preg20.setRespuestac("-9");
@@ -294,9 +295,8 @@ public class main extends javax.swing.JFrame {
         preg20.setRespuesta3("-10");
         pregsMatematica.add(preg20);
         CPrincipal.getInstance().persist(preg20);
-        
-           
-           //MUY DIFICILES ---------------------------------------------------------------------------
+
+        //MUY DIFICILES ---------------------------------------------------------------------------
         Ciencia = new categorias();
         Ciencia.setDificultad(Dificil);
         Ciencia.setDescripcion("Preguntas sobre Ciencia");
@@ -312,42 +312,54 @@ public class main extends javax.swing.JFrame {
         preg21.setRespuesta3("Poros");
         pregsCiencia.add(preg21);
         CPrincipal.getInstance().persist(preg21);
-        
-           preg22 = new preguntas();
-        preg22.setPregunta("¿Cómo se llama el componente mínimo que forma a los seres vivos?");
-        preg22.setRespuestac("Célula");
-        preg22.setRespuesta1("Tejido");
-        preg22.setRespuesta2("Particula");
-        preg22.setRespuesta3("Poros");
+
+        preg22 = new preguntas();
+        preg22.setPregunta("El proceso por el que una célula se divide para formar dos células hijas se llama:");
+        preg22.setRespuestac("Mitosis");
+        preg22.setRespuesta1("Segregación");
+        preg22.setRespuesta2("Meosis");
+        preg22.setRespuesta3("Tesis");
         pregsCiencia.add(preg22);
         CPrincipal.getInstance().persist(preg22);
-        
-           preg23 = new preguntas();
-        preg23.setPregunta("¿Cómo se llama el componente mínimo que forma a los seres vivos?");
+
+        preg23 = new preguntas();
+        preg23.setPregunta("La información genética en las células se localiza:");
         preg23.setRespuestac("Célula");
         preg23.setRespuesta1("Tejido");
         preg23.setRespuesta2("Particula");
         preg23.setRespuesta3("Poros");
         pregsCiencia.add(preg23);
         CPrincipal.getInstance().persist(preg23);
-        
-           preg24 = new preguntas();
-        preg24.setPregunta("¿Cómo se llama el componente mínimo que forma a los seres vivos?");
-        preg24.setRespuestac("Célula");
-        preg24.setRespuesta1("Tejido");
-        preg24.setRespuesta2("Particula");
-        preg24.setRespuesta3("Poros");
+
+        preg24 = new preguntas();
+        preg24.setPregunta("La información genética en las células se localiza:");
+        preg24.setRespuestac("En el nucleo");
+        preg24.setRespuesta1("En la membrana");
+        preg24.setRespuesta2("En el citoplasma");
+        preg24.setRespuesta3("En el sistema linfatico");
         pregsCiencia.add(preg24);
         CPrincipal.getInstance().persist(preg24);
-        
-           preg25 = new preguntas();
-        preg25.setPregunta("¿Cómo se llama el componente mínimo que forma a los seres vivos?");
-        preg25.setRespuestac("Célula");
-        preg25.setRespuesta1("Tejido");
-        preg25.setRespuesta2("Particula");
-        preg25.setRespuesta3("Poros");
+
+        preg25 = new preguntas();
+        preg25.setPregunta("¿Con qué respira una ballena?");
+        preg25.setRespuestac("Pulmones");
+        preg25.setRespuesta1("Por la piel");
+        preg25.setRespuesta2("Branquias");
+        preg25.setRespuesta3("Por la boca");
         pregsCiencia.add(preg25);
         CPrincipal.getInstance().persist(preg25);
+
+        General.setPreguntass(pregGenerales);
+        Deportes.setPreguntass(pregsDeportes);
+        Matematica.setPreguntass(pregsMatematica);
+        Biologia.setPreguntass(pregsBiologia);
+        Ciencia.setPreguntass(pregsCiencia);
+        
+        CPrincipal.getInstance().merge(General);
+        CPrincipal.getInstance().merge(Deportes);
+        CPrincipal.getInstance().merge(Matematica);
+        CPrincipal.getInstance().merge(Biologia);
+        CPrincipal.getInstance().merge(Ciencia);
         
     }
 
