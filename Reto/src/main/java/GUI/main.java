@@ -251,13 +251,104 @@ public class main extends javax.swing.JFrame {
         CPrincipal.getInstance().refresh(Dificil);
 
         preg16 = new preguntas();
-        preg16.setPregunta("¿Qué es el efecto invernadero?");
-        preg16.setRespuestac("Es un fenómeno natural y beneficioso");
-        preg16.setRespuesta1("La combustiones y el uso de energía no renovable lo disminuye");
-        preg16.setRespuesta2("Gases como CO2 lo disminuye");
-        preg16.setRespuesta3("No eleva la temperatura global de la tierra");
-        pregsBiologia.add(preg16);
+        preg16.setPregunta("Adivina cuántos años tegno sabiendo que la tercera parte de ellos menos 1 es igual a la sexta parte");
+        preg16.setRespuestac("6");
+        preg16.setRespuesta1("5");
+        preg16.setRespuesta2("7");
+        preg16.setRespuesta3("8");
+        pregsMatematica.add(preg16);
         CPrincipal.getInstance().persist(preg16);
+        
+        preg17 = new preguntas();
+        preg17.setPregunta("¿A cuánto equivale π?");
+        preg17.setRespuestac("3,141592");
+        preg17.setRespuesta1("3,149215");
+        preg17.setRespuesta2("3,144243");
+        preg17.setRespuesta3("3,144123");
+        pregsMatematica.add(preg17);
+        CPrincipal.getInstance().persist(preg17);
+        
+        preg18 = new preguntas();
+        preg18.setPregunta("7/5 + 2/3 - 1");
+        preg18.setRespuestac("16/15");
+        preg18.setRespuesta1("17/15");
+        preg18.setRespuesta2("8/8");
+        preg18.setRespuesta3("1");
+        pregsMatematica.add(preg18);
+        CPrincipal.getInstance().persist(preg18);
+        
+        preg19 = new preguntas();
+        preg19.setPregunta("¿Que formula es esta? \n S= π x R²");
+        preg19.setRespuestac("Superficie de un circulo");
+        preg19.setRespuesta1("Diametro de un circulo");
+        preg19.setRespuesta2("Volumen de un cilindro");
+        preg19.setRespuesta3("Superficie de paralelogramos");
+        pregsMatematica.add(preg19);
+        CPrincipal.getInstance().persist(preg19);
+        
+        preg20 = new preguntas();
+        preg20.setPregunta("(-3)³ + (-2)³ - (-3)³ + (-1)³ =");
+        preg20.setRespuestac("-9");
+        preg20.setRespuesta1("10");
+        preg20.setRespuesta2("9");
+        preg20.setRespuesta3("-10");
+        pregsMatematica.add(preg20);
+        CPrincipal.getInstance().persist(preg20);
+        
+           
+           //MUY DIFICILES ---------------------------------------------------------------------------
+        Ciencia = new categorias();
+        Ciencia.setDificultad(Dificil);
+        Ciencia.setDescripcion("Preguntas sobre Ciencia");
+
+        CPrincipal.getInstance().persist(Ciencia);
+        CPrincipal.getInstance().refresh(MuyDificil);
+
+        preg21 = new preguntas();
+        preg21.setPregunta("¿Cómo se llama el componente mínimo que forma a los seres vivos?");
+        preg21.setRespuestac("Célula");
+        preg21.setRespuesta1("Tejido");
+        preg21.setRespuesta2("Particula");
+        preg21.setRespuesta3("Poros");
+        pregsCiencia.add(preg21);
+        CPrincipal.getInstance().persist(preg21);
+        
+           preg22 = new preguntas();
+        preg22.setPregunta("¿Cómo se llama el componente mínimo que forma a los seres vivos?");
+        preg22.setRespuestac("Célula");
+        preg22.setRespuesta1("Tejido");
+        preg22.setRespuesta2("Particula");
+        preg22.setRespuesta3("Poros");
+        pregsCiencia.add(preg22);
+        CPrincipal.getInstance().persist(preg22);
+        
+           preg23 = new preguntas();
+        preg23.setPregunta("¿Cómo se llama el componente mínimo que forma a los seres vivos?");
+        preg23.setRespuestac("Célula");
+        preg23.setRespuesta1("Tejido");
+        preg23.setRespuesta2("Particula");
+        preg23.setRespuesta3("Poros");
+        pregsCiencia.add(preg23);
+        CPrincipal.getInstance().persist(preg23);
+        
+           preg24 = new preguntas();
+        preg24.setPregunta("¿Cómo se llama el componente mínimo que forma a los seres vivos?");
+        preg24.setRespuestac("Célula");
+        preg24.setRespuesta1("Tejido");
+        preg24.setRespuesta2("Particula");
+        preg24.setRespuesta3("Poros");
+        pregsCiencia.add(preg24);
+        CPrincipal.getInstance().persist(preg24);
+        
+           preg25 = new preguntas();
+        preg25.setPregunta("¿Cómo se llama el componente mínimo que forma a los seres vivos?");
+        preg25.setRespuestac("Célula");
+        preg25.setRespuesta1("Tejido");
+        preg25.setRespuesta2("Particula");
+        preg25.setRespuesta3("Poros");
+        pregsCiencia.add(preg25);
+        CPrincipal.getInstance().persist(preg25);
+        
     }
 
     /**
