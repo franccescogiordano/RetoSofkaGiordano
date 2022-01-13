@@ -8,6 +8,7 @@ package GUI;
 import CLASES.categorias;
 import CLASES.dificultad;
 import CLASES.jugador;
+import CLASES.preguntas;
 import CONTROLADORES.ctrlplayer;
 import CONTROLADORES.ctrlquestions;
 import PERSISTENCIA.CPrincipal;
@@ -28,7 +29,7 @@ public class main extends javax.swing.JFrame {
     public static List<dificultad> dificultades = new ArrayList<dificultad>();
     public static List<categorias> cats = new ArrayList<categorias>();
     public static jugador usuariologeado = new jugador();
-
+    public static List<preguntas> pregs = new ArrayList<preguntas>();
     ctrlplayer CP = new ctrlplayer();
     ctrlquestions CQ = new ctrlquestions();
     
@@ -39,6 +40,7 @@ public class main extends javax.swing.JFrame {
         jugadores = CP.cargarjugadores();
         dificultades = CQ.listadodifis();
         cats=CQ.listadocats();
+        pregs=CQ.listapreguntas();
     }
 
     /**

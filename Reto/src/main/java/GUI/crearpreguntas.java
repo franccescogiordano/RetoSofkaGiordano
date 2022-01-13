@@ -66,7 +66,7 @@ public class crearpreguntas extends javax.swing.JFrame {
 
         jLabel5.setText("Respuesta Erronea 3");
 
-        jButton1.setText("Confirmar");
+        jButton1.setText("Crear ");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -121,7 +121,7 @@ public class crearpreguntas extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(txtrespuestaerronea2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtrespuestaerronea1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,6 +180,8 @@ public class crearpreguntas extends javax.swing.JFrame {
         pregscat.add(pregunta);
         categoriaa.setPreguntass(pregscat);
         CPrincipal.getInstance().merge(categoriaa);
+        vaciartodo();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -225,6 +227,13 @@ public class crearpreguntas extends javax.swing.JFrame {
         });
     }
 
+    public void vaciartodo() {
+        txtpregunta.setText("");
+        txtrespuestacorrecta.setText("");
+        txtrespuestaerronea1.setText("");
+        txtrespuestaerronea2.setText("");
+        txtrespuestaerronea3.setText("");
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
