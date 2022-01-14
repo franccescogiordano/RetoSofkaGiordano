@@ -31,74 +31,76 @@ public class jugar extends javax.swing.JFrame {
     public static rondas ronda = null;
     public static participa participacion = null;
     public static preguntas preg = null;
-    public static jugador playeractual= new jugador();
+    public static jugador playeractual = new jugador();
     public static List<participa> participacionesdeljugador = new ArrayList<participa>();
     ctrlquestions CQ = new ctrlquestions();
     int puntos;
+    boolean siguientepressed = false;
     public jugar(jugador player) {
         initComponents();
-       
+
         ronda = new rondas();
         ronda.setNumero_rondas(5);
         ronda.setRonda_actual(1);
-       
+
         participacion = new participa();
         preg = new preguntas();
         preg = CQ.pregunta1();
-        playeractual=player;
+        playeractual = player;
         rellenarcampos(preg);
 
     }
 
     public void chekearrespuesta(JRadioButton radiobtm) {
+        
         respuesta1.setEnabled(false);
         respuesta2.setEnabled(false);
         respuesta3.setEnabled(false);
         respuesta4.setEnabled(false);
-       CPrincipal.getInstance().persist(ronda);
-       CPrincipal.getInstance().persist(participacion);
-       
+        CPrincipal.getInstance().persist(ronda);
+        CPrincipal.getInstance().persist(participacion);
+
         ronda.setPartipacion(participacion);
-        if(radiobtm.getText().equals(preg.getRespuestac())){
-         jLabelRespuesta.setText("Correcta");
-          participacion.setEstadoronda("Gano");
-        }else{
-             jLabelRespuesta.setText("Incorrecta, la respuesta correcta era: "+preg.getRespuestac());
-              participacion.setEstadoronda("Perdio");
+        if (radiobtm.getText().equals(preg.getRespuestac())) {
+            jLabelRespuesta.setText("Correcta");
+            participacion.setEstadoronda("Gano");
+        } else {
+            jLabelRespuesta.setText("Incorrecta, la respuesta correcta era: " + preg.getRespuestac());
+            participacion.setEstadoronda("Perdio");
         }
-       
+
         participacion.setPreguntaronda(preg.toString());
         participacion.setRespuestaEelegida(radiobtm.getText());
-        if(ronda.getRonda_actual()==1){
-        participacion.setPremioronda(100);
-        }else if(ronda.getRonda_actual()==2){
-              participacion.setPremioronda(200);
-        }else  if(ronda.getRonda_actual()==3){
-              participacion.setPremioronda(300);
-        }else  if(ronda.getRonda_actual()==4){
-              participacion.setPremioronda(400);
-        } else  if(ronda.getRonda_actual()==5){
-              participacion.setPremioronda(500);
-        } 
+        if (ronda.getRonda_actual() == 1) {
+            participacion.setPremioronda(100);
+        } else if (ronda.getRonda_actual() == 2) {
+            participacion.setPremioronda(200);
+        } else if (ronda.getRonda_actual() == 3) {
+            participacion.setPremioronda(300);
+        } else if (ronda.getRonda_actual() == 4) {
+            participacion.setPremioronda(400);
+        } else if (ronda.getRonda_actual() == 5) {
+            participacion.setPremioronda(500);
+        }
         participacion.setRondajugada(ronda);
         participacion.setParticipante(playeractual);
-        puntos=playeractual.getPuntos();
-        playeractual.setPuntos(puntos+participacion.getPremioronda());
-        if(playeractual.getParticipaciones().isEmpty()){
-        playeractual.setParticipaciones(participacionesdeljugador);
-    }else{
-            participacionesdeljugador=playeractual.getParticipaciones();
+        puntos = playeractual.getPuntos();
+        playeractual.setPuntos(puntos + participacion.getPremioronda());
+        if (playeractual.getParticipaciones().isEmpty()) {
+            playeractual.setParticipaciones(participacionesdeljugador);
+        } else {
+            participacionesdeljugador = playeractual.getParticipaciones();
             participacionesdeljugador.add(participacion);
             playeractual.setParticipaciones(participacionesdeljugador);
-            
+
         }
-       
-      
+
         CPrincipal.getInstance().merge(ronda);
         CPrincipal.getInstance().merge(participacion);
         CPrincipal.getInstance().merge(playeractual);
-    
+
     }
+
     private jugar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -147,6 +149,66 @@ public class jugar extends javax.swing.JFrame {
         }
 
     }
+public void activarbotones(){
+    
+    nextround.setEnabled(false);
+    
+    respuesta1.setEnabled(true);
+    respuesta2.setEnabled(true);
+    respuesta3.setEnabled(true);
+    respuesta4.setEnabled(true);
+    respuesta1.setSelected(false);
+    respuesta2.setSelected(false);
+    respuesta3.setSelected(false);
+    respuesta4.setSelected(false);
+    siguientepressed=false;
+            
+}
+    public void pasarsiguienteronda() {
+        activarbotones();
+      
+        int num = ronda.getRonda_actual();
+        if (ronda.getRonda_actual() < 5) {
+            rondas rondanueva = new rondas();
+            ronda = rondanueva;
+            participacion = new participa();
+            ronda.setNumero_rondas(5);
+            
+            participacion = new participa();
+            preg = new preguntas();
+            preg = CQ.pregunta1();
+            switch (num) {
+                case 1:
+                    ronda.setRonda_actual(2);
+                    preg = CQ.pregunta2();
+                      jLabel6.setText("2");
+                    rellenarcampos(preg);
+                    break;
+                case 2:
+                     ronda.setRonda_actual(3);
+                      jLabel6.setText("3");
+                    preg = CQ.pregunta3();
+                     rellenarcampos(preg);
+                    break;
+                case 3:
+                    ronda.setRonda_actual(4);
+                     jLabel6.setText("4");
+                    preg = CQ.pregunta4();
+                    rellenarcampos(preg);
+                    break;
+
+                case 4:
+                    ronda.setRonda_actual(5);
+                     jLabel6.setText("5");
+                    preg = CQ.pregunta5(); 
+                    rellenarcampos(preg);
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -169,6 +231,7 @@ public class jugar extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabelRespuesta = new javax.swing.JLabel();
+        nextround = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -190,12 +253,27 @@ public class jugar extends javax.swing.JFrame {
 
         respuesta2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         respuesta2.setText("jRadioButton2");
+        respuesta2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                respuesta2ItemStateChanged(evt);
+            }
+        });
 
         respuesta3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         respuesta3.setText("jRadioButton3");
+        respuesta3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                respuesta3ItemStateChanged(evt);
+            }
+        });
 
         respuesta4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         respuesta4.setText("jRadioButton4");
+        respuesta4.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                respuesta4ItemStateChanged(evt);
+            }
+        });
         respuesta4.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 respuesta4StateChanged(evt);
@@ -222,40 +300,54 @@ public class jugar extends javax.swing.JFrame {
 
         jLabelRespuesta.setText("jLabel2");
 
+        nextround.setText("Siguiente Ronda");
+        nextround.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextroundActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(nextround))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel4)
+                        .addGap(278, 278, 278)
+                        .addComponent(jLabel3)
+                        .addGap(0, 176, Short.MAX_VALUE)))
+                .addGap(113, 113, 113))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(respuesta2)
-                                .addComponent(respuesta1)
-                                .addComponent(respuesta3)
-                                .addComponent(respuesta4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(88, 88, 88)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelrespuesta)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelRespuesta))))
+                        .addGap(153, 153, 153)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel4)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 340, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(93, 93, 93))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(153, 153, 153)
-                .addComponent(jLabel5)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7)
+                        .addGap(78, 78, 78)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(respuesta2)
+                                        .addComponent(respuesta1)
+                                        .addComponent(respuesta3)
+                                        .addComponent(respuesta4))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(labelrespuesta)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabelRespuesta))))
+                            .addComponent(jLabel1))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -270,7 +362,7 @@ public class jugar extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
-                .addGap(24, 24, 24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(respuesta1)
@@ -284,7 +376,9 @@ public class jugar extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelrespuesta)
                     .addComponent(jLabelRespuesta))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addGap(44, 44, 44)
+                .addComponent(nextround)
+                .addGap(17, 17, 17))
         );
 
         pack();
@@ -301,9 +395,41 @@ public class jugar extends javax.swing.JFrame {
     }//GEN-LAST:event_respuesta1StateChanged
 
     private void respuesta1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_respuesta1ItemStateChanged
-      chekearrespuesta(respuesta1);
+        if(!siguientepressed){
+        chekearrespuesta(respuesta1);
+         nextround.setEnabled(true);
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_respuesta1ItemStateChanged
+
+    private void nextroundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextroundActionPerformed
+     siguientepressed = true;
+    pasarsiguienteronda();
+    }//GEN-LAST:event_nextroundActionPerformed
+
+    private void respuesta2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_respuesta2ItemStateChanged
+        if(!siguientepressed){
+        chekearrespuesta(respuesta2);
+         nextround.setEnabled(true);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_respuesta2ItemStateChanged
+
+    private void respuesta3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_respuesta3ItemStateChanged
+  if(!siguientepressed){
+        chekearrespuesta(respuesta3);
+   nextround.setEnabled(true);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_respuesta3ItemStateChanged
+
+    private void respuesta4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_respuesta4ItemStateChanged
+  if(!siguientepressed){
+        chekearrespuesta(respuesta4);
+   nextround.setEnabled(true);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_respuesta4ItemStateChanged
     /**
      * @param args the command line arguments
      */
@@ -348,6 +474,7 @@ public class jugar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelRespuesta;
     private javax.swing.JLabel labelrespuesta;
+    private javax.swing.JButton nextround;
     private javax.swing.JRadioButton respuesta1;
     private javax.swing.JRadioButton respuesta2;
     private javax.swing.JRadioButton respuesta3;

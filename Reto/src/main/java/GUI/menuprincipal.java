@@ -12,17 +12,22 @@ import CLASES.jugador;
  * @author franc
  */
 public class menuprincipal extends javax.swing.JFrame {
-
+    
     jugador player;
+
     /**
      * Creates new form menuprincipal
      */
     public menuprincipal(jugador player) {
-    initComponents();
-    this.player=player;
-    jLabel1.setText(player.getNombre());
+        initComponents();
+        this.player = player;
+        jLabel1.setText(player.getNombre());
+        puntoslb.setText(String.valueOf(player.getPuntos()));
+    
+        String rondasjugadas = String.valueOf(player.getRondasjugadas());
+        rondasjugadaslb.setText(rondasjugadas);
     }
-
+    
     private menuprincipal() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -40,6 +45,11 @@ public class menuprincipal extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        puntoslb = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        rondasjugadaslb = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,6 +75,16 @@ public class menuprincipal extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel2.setText("Puntos jugador");
+
+        puntoslb.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        puntoslb.setText("0");
+
+        jLabel3.setText("Rondas jugadas:");
+
+        rondasjugadaslb.setText("x");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -84,6 +104,18 @@ public class menuprincipal extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1)
+                        .addGap(63, 63, 63)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rondasjugadaslb)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel4))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(puntoslb)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -92,8 +124,15 @@ public class menuprincipal extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel23))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
+                    .addComponent(jLabel23)
+                    .addComponent(jLabel2)
+                    .addComponent(puntoslb))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(rondasjugadaslb))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1))
@@ -104,14 +143,14 @@ public class menuprincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        crearpreguntas cp= new crearpreguntas();
+        crearpreguntas cp = new crearpreguntas();
         cp.setVisible(true);
         this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        jugar juego= new jugar(player);
+        jugar juego = new jugar(player);
         juego.setVisible(true);
         this.dispose();
         // TODO add your handling code here:
@@ -156,6 +195,11 @@ public class menuprincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel puntoslb;
+    private javax.swing.JLabel rondasjugadaslb;
     // End of variables declaration//GEN-END:variables
 }
