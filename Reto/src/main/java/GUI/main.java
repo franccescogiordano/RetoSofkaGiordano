@@ -48,27 +48,27 @@ public class main extends javax.swing.JFrame {
     public void verificarycargaridifs() {
         List<preguntas> lista = new ArrayList<preguntas>();
         dificultad dif = null;
-        int i=0;
+        int i = 0;
         Iterator<dificultad> it = main.dificultades.iterator();
         while (it.hasNext()) {
             dif = it.next();
             if (dif.getNivel().equals("Facil")) {
                 i++;
-            }else if  ( dif.getNivel().equals("Muy Facil")){
+            } else if (dif.getNivel().equals("Muy Facil")) {
                 i++;
-            }else  if( dif.getNivel().equals("Normal")){
+            } else if (dif.getNivel().equals("Normal")) {
                 i++;
-                    }else if ( dif.getNivel().equals("Dificil")){
-                        i++;
-                    }else if ( dif.getNivel().equals("Muy Dificil")){
-                        i++;
-                    }
+            } else if (dif.getNivel().equals("Dificil")) {
+                i++;
+            } else if (dif.getNivel().equals("Muy Dificil")) {
+                i++;
+            }
 
         }
-        if(i==5){
-            
-        }else{
-            
+        if (i == 5) {
+
+        } else {
+
         }
     }
 
@@ -415,6 +415,21 @@ public class main extends javax.swing.JFrame {
         CPrincipal.getInstance().merge(Biologia);
         CPrincipal.getInstance().merge(Ciencia);
 
+        String nombre = "administrador";
+        String usuario = "admin";
+   
+        jugador pepe = new jugador();
+        pepe.setNombre(nombre);
+        pepe.setUsuario(usuario);
+        this.dispose();
+        main alo = new main();
+        alo.setVisible(true);
+        CPrincipal.getInstance().persist(pepe);
+        main.jugadores.add(pepe);
+        jugadores = CP.cargarjugadores();
+        dificultades = CQ.listadodifis();
+        cats = CQ.listadocats();
+        pregs = CQ.listapreguntas();
     }
 
     /**
