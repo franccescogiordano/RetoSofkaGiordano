@@ -42,7 +42,34 @@ public class main extends javax.swing.JFrame {
         dificultades = CQ.listadodifis();
         cats = CQ.listadocats();
         pregs = CQ.listapreguntas();
-    
+
+    }
+
+    public void verificarycargaridifs() {
+        List<preguntas> lista = new ArrayList<preguntas>();
+        dificultad dif = null;
+        int i=0;
+        Iterator<dificultad> it = main.dificultades.iterator();
+        while (it.hasNext()) {
+            dif = it.next();
+            if (dif.getNivel().equals("Facil")) {
+                i++;
+            }else if  ( dif.getNivel().equals("Muy Facil")){
+                i++;
+            }else  if( dif.getNivel().equals("Normal")){
+                i++;
+                    }else if ( dif.getNivel().equals("Dificil")){
+                        i++;
+                    }else if ( dif.getNivel().equals("Muy Dificil")){
+                        i++;
+                    }
+
+        }
+        if(i==5){
+            
+        }else{
+            
+        }
     }
 
     public void cargarBD() {
@@ -87,6 +114,7 @@ public class main extends javax.swing.JFrame {
 
         General = new categorias();
         General.setDificultad(MuyFacil);
+        General.setNombre("General");
         General.setDescripcion("Preguntas generales sin ninguna categoria en particular");
 
         CPrincipal.getInstance().persist(General);
@@ -321,7 +349,7 @@ public class main extends javax.swing.JFrame {
         Ciencia = new categorias();
         Ciencia.setDificultad(MuyDificil);
         Ciencia.setDescripcion("Preguntas sobre Ciencia");
-
+        Ciencia.setNombre("Ciencia");
         CPrincipal.getInstance().persist(Ciencia);
         CPrincipal.getInstance().refresh(MuyDificil);
 
