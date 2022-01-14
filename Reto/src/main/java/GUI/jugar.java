@@ -10,6 +10,13 @@ import CLASES.participa;
 import CLASES.preguntas;
 import CLASES.rondas;
 import CONTROLADORES.ctrlquestions;
+import PERSISTENCIA.CPrincipal;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import javax.swing.JRadioButton;
 
 /**
  *
@@ -20,130 +27,123 @@ public class jugar extends javax.swing.JFrame {
     /**
      * Creates new form jugar
      */
-    public static boolean one, two, three, four;
     private int rondasjugadas;
     public static rondas ronda = null;
     public static participa participacion = null;
     public static preguntas preg = null;
+    public static jugador playeractual= new jugador();
+    public static List<participa> participacionesdeljugador = new ArrayList<participa>();
     ctrlquestions CQ = new ctrlquestions();
-
+    int puntos;
     public jugar(jugador player) {
         initComponents();
-        int acumulado;
+       
         ronda = new rondas();
+        ronda.setNumero_rondas(5);
+        ronda.setRonda_actual(1);
+       
         participacion = new participa();
         preg = new preguntas();
-
-        rellenarcampos(CQ.pregunta1());
+        preg = CQ.pregunta1();
+        playeractual=player;
+        rellenarcampos(preg);
 
     }
 
-    jugar() {
+    public void chekearrespuesta(JRadioButton radiobtm) {
+        respuesta1.setEnabled(false);
+        respuesta2.setEnabled(false);
+        respuesta3.setEnabled(false);
+        respuesta4.setEnabled(false);
+       CPrincipal.getInstance().persist(ronda);
+       CPrincipal.getInstance().persist(participacion);
+       
+        ronda.setPartipacion(participacion);
+        if(radiobtm.getText().equals(preg.getRespuestac())){
+         jLabelRespuesta.setText("Correcta");
+          participacion.setEstadoronda("Gano");
+        }else{
+             jLabelRespuesta.setText("Incorrecta, la respuesta correcta era: "+preg.getRespuestac());
+              participacion.setEstadoronda("Perdio");
+        }
+       
+        participacion.setPreguntaronda(preg.toString());
+        participacion.setRespuestaEelegida(radiobtm.getText());
+        if(ronda.getRonda_actual()==1){
+        participacion.setPremioronda(100);
+        }else if(ronda.getRonda_actual()==2){
+              participacion.setPremioronda(200);
+        }else  if(ronda.getRonda_actual()==3){
+              participacion.setPremioronda(300);
+        }else  if(ronda.getRonda_actual()==4){
+              participacion.setPremioronda(400);
+        } else  if(ronda.getRonda_actual()==5){
+              participacion.setPremioronda(500);
+        } 
+        participacion.setRondajugada(ronda);
+        participacion.setParticipante(playeractual);
+        puntos=playeractual.getPuntos();
+        playeractual.setPuntos(puntos+participacion.getPremioronda());
+        if(playeractual.getParticipaciones().isEmpty()){
+        playeractual.setParticipaciones(participacionesdeljugador);
+    }else{
+            participacionesdeljugador=playeractual.getParticipaciones();
+            participacionesdeljugador.add(participacion);
+            playeractual.setParticipaciones(participacionesdeljugador);
+            
+        }
+       
+      
+        CPrincipal.getInstance().merge(ronda);
+        CPrincipal.getInstance().merge(participacion);
+        CPrincipal.getInstance().merge(playeractual);
+    
+    }
+    private jugar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private List desordenadossinrepetir(String[] respuestas) {
+        Random random = new Random();
+        String[] respuestasdesordenadas = new String[4];
+        int i = 0;
+        while (i < 4) {
+            int pos = random.nextInt(respuestas.length);
+            if (!Arrays.asList(respuestasdesordenadas).contains(respuestas[pos])) {
+                respuestasdesordenadas[i] = respuestas[pos];
+                i++;
+            }
+        }
+        return Arrays.asList(respuestasdesordenadas);
     }
 
     public void rellenarcampos(preguntas preg1) {
         jLabel1.setText(preg.getPregunta());
-        one = false;
-        two = false;
-        three = false;
-        four = false;
-        int random;
+        int i = 1;
         String respuesta1x = preg1.getRespuestac();
         String respuesta2x = preg1.getRespuesta1();
         String respuesta3x = preg1.getRespuesta2();
         String respuesta4x = preg1.getRespuesta3();
-        for (int i = 4; i <= 4; i = i + 1) {
-
+        String[] x = {respuesta1x, respuesta2x, respuesta3x, respuesta4x};
+        List opciones = desordenadossinrepetir(x);
+        for (i = 0; i < 4; i = i + 1) {
             switch (i) {
+                case 0:
+                    respuesta1.setText(opciones.get(i).toString());
 
-                case 1: {
+                case 1:
+                    respuesta2.setText(opciones.get(i).toString());
 
-                    random = (int) (Math.random() * 4 + 1);
-                    if (random == 1 && !one) {
-                        respuesta1.setText(respuesta1x);
-                        one = true;
-                    } else if (random == 2 && !two) {
-                        respuesta1.setText(respuesta2x);
-                        two = true;
-                    } else if (random == 3 && !three) {
-                        respuesta1.setText(respuesta3x);
-                        three = true;
-                    } else if (random == 4 && !four) {
-                        respuesta1.setText(respuesta4x);
-                        four = true;
-                    }
-                    break;
+                case 2:
+                    respuesta3.setText(opciones.get(i).toString());
 
-                }
+                case 3:
+                    respuesta4.setText(opciones.get(i).toString());
 
-                case 2: {
+                default:
 
-                    random = (int) (Math.random() * 4 + 1);
-                    if (random == 1 && !one) {
-                        respuesta2.setText(respuesta1x);
-                        one = true;
-                    } else if (random == 2 && !two) {
-                        respuesta2.setText(respuesta2x);
-                        two = true;
-                    } else if (random == 3 && !three) {
-                        respuesta2.setText(respuesta3x);
-                        three = true;
-                    } else if (random == 4 && !four) {
-                        respuesta2.setText(respuesta4x);
-                        four = true;
-                    }
+            }
 
-                    break;
-
-                }
-
-                case 3: {
-
-                    random = (int) (Math.random() * 4 + 1);
-                    if (random == 1 && !one) {
-                        respuesta3.setText(respuesta1x);
-                        one = true;
-                    } else if (random == 2 && !two) {
-                        respuesta3.setText(respuesta2x);
-                        two = true;
-                    } else if (random == 3 && !three) {
-                        respuesta3.setText(respuesta3x);
-                        three = true;
-                    } else if (random == 4 && !four) {
-                        respuesta3.setText(respuesta4x);
-                        four = true;
-                    }
-
-                    break;
-
-                }
-                case 4: {
-
-                    random = (int) (Math.random() * 4 + 1);
-                    if (random == 1 && !one) {
-                        respuesta4.setText(respuesta1x);
-                        one = true;
-                    } else if (random == 2 && !two) {
-                        respuesta4.setText(respuesta2x);
-                        two = true;
-                    } else if (random == 3 && !three) {
-                        respuesta4.setText(respuesta3x);
-                        three = true;
-                    } else if (random == 4 && !four) {
-                        respuesta4.setText(respuesta4x);
-                        four = true;
-                    }
-
-                    break;
-
-                }
-
-                default: {
-
-                }
-
-            }//cierra SWITCH
         }
 
     }
@@ -162,13 +162,13 @@ public class jugar extends javax.swing.JFrame {
         respuesta2 = new javax.swing.JRadioButton();
         respuesta3 = new javax.swing.JRadioButton();
         respuesta4 = new javax.swing.JRadioButton();
-        jLabel2 = new javax.swing.JLabel();
+        labelrespuesta = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jLabelRespuesta = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -177,6 +177,16 @@ public class jugar extends javax.swing.JFrame {
 
         respuesta1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         respuesta1.setText("jRadioButton1");
+        respuesta1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                respuesta1ItemStateChanged(evt);
+            }
+        });
+        respuesta1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                respuesta1StateChanged(evt);
+            }
+        });
 
         respuesta2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         respuesta2.setText("jRadioButton2");
@@ -192,8 +202,8 @@ public class jugar extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setText("Respuesta:");
+        labelrespuesta.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelrespuesta.setText("Respuesta:");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setText("Premio Ronda:");
@@ -210,8 +220,7 @@ public class jugar extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel7.setText("/5");
 
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton1.setText("Siguiente ");
+        jLabelRespuesta.setText("jLabel2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -230,25 +239,23 @@ public class jugar extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(88, 88, 88)
                                 .addComponent(jLabel1))
-                            .addComponent(jLabel2)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelrespuesta)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelRespuesta))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addComponent(jLabel4)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 340, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(93, 93, 93))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(153, 153, 153)
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(170, 170, 170)
-                        .addComponent(jButton1)))
+                .addGap(153, 153, 153)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -274,10 +281,10 @@ public class jugar extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(respuesta4)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelrespuesta)
+                    .addComponent(jLabelRespuesta))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
@@ -287,6 +294,16 @@ public class jugar extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_respuesta4StateChanged
+
+    private void respuesta1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_respuesta1StateChanged
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_respuesta1StateChanged
+
+    private void respuesta1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_respuesta1ItemStateChanged
+      chekearrespuesta(respuesta1);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_respuesta1ItemStateChanged
     /**
      * @param args the command line arguments
      */
@@ -323,14 +340,14 @@ public class jugar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabelRespuesta;
+    private javax.swing.JLabel labelrespuesta;
     private javax.swing.JRadioButton respuesta1;
     private javax.swing.JRadioButton respuesta2;
     private javax.swing.JRadioButton respuesta3;
