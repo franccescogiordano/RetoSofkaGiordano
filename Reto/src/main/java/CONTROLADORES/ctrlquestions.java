@@ -13,6 +13,7 @@ import static GUI.crearcategoria.jComboBoxDifi;
 import GUI.crearpreguntas;
 import GUI.main;
 import PERSISTENCIA.CPrincipal;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -91,7 +92,8 @@ public class ctrlquestions {
     }
 
     public List<preguntas> listapreguntas() {
-        List<preguntas> lista = null;
+        
+    List<preguntas> lista = new ArrayList<preguntas>();
         em.getTransaction().begin();
         try {
             lista = em.createNativeQuery("SELECT * FROM preguntas", preguntas.class).getResultList();
@@ -105,18 +107,23 @@ public class ctrlquestions {
     public preguntas pregunta1() {
 
         int cantidadpregs = listapreguntasmuyfacil().size();
-        preguntas preguntaelegida = listapreguntasmuyfacil().get((int) (Math.random() * cantidadpregs + 1));
-
+        int numero_random=(int) (Math.random() * cantidadpregs + 0);
+   //     System.out.println("PREGUNTA 1 NUMERO RANDOMMMM: "+cantidadpregs+" "+numero_random);
+        preguntas preguntaelegida = listapreguntasmuyfacil().get(numero_random);
+        
         return preguntaelegida;
     }
 
     public List<preguntas> listapreguntasfaciles() {
-        List<preguntas> lista = null;
+        
+      List<preguntas> lista = new ArrayList<preguntas>();
+      
         preguntas preg = null;
+        
         Iterator<preguntas> it = main.pregs.iterator();
         while (it.hasNext()) {
             preg = it.next();
-            if (preg.getCategoria().getDificultad().equals("Facil")) {
+            if (preg.getCategoria().getDificultad().getNivel().equals("Facil")) {
                 lista.add(preg);
             }
 
@@ -125,12 +132,12 @@ public class ctrlquestions {
     }
 
     public List<preguntas> listapreguntasmedio() {
-        List<preguntas> lista = null;
+      List<preguntas> lista = new ArrayList<preguntas>();
         preguntas preg = null;
         Iterator<preguntas> it = main.pregs.iterator();
         while (it.hasNext()) {
             preg = it.next();
-            if (preg.getCategoria().getDificultad().equals("Normal")) {
+            if (preg.getCategoria().getDificultad().getNivel().equals("Normal")) {
                 lista.add(preg);
             }
 
@@ -139,12 +146,12 @@ public class ctrlquestions {
     }
 
     public List<preguntas> listapreguntasdificil() {
-        List<preguntas> lista = null;
+     List<preguntas> lista = new ArrayList<preguntas>();
         preguntas preg = null;
         Iterator<preguntas> it = main.pregs.iterator();
         while (it.hasNext()) {
             preg = it.next();
-            if (preg.getCategoria().getDificultad().equals("Dificil")) {
+            if (preg.getCategoria().getDificultad().getNivel().equals("Dificil")) {
                 lista.add(preg);
             }
 
@@ -152,12 +159,12 @@ public class ctrlquestions {
         return lista;
     }
     public List<preguntas> listapreguntasmuydificil() {
-        List<preguntas> lista = null;
+       List<preguntas> lista = new ArrayList<preguntas>();
         preguntas preg = null;
         Iterator<preguntas> it = main.pregs.iterator();
         while (it.hasNext()) {
             preg = it.next();
-            if (preg.getCategoria().getDificultad().equals("Muy Dificil")) {
+            if (preg.getCategoria().getDificultad().getNivel().equals("Muy Dificil")) {
                 lista.add(preg);
             }
 
@@ -165,12 +172,12 @@ public class ctrlquestions {
         return lista;
     }
     public List<preguntas> listapreguntasmuyfacil() {
-        List<preguntas> lista = null;
+        List<preguntas> lista = new ArrayList<preguntas>();
         preguntas preg = null;
         Iterator<preguntas> it = main.pregs.iterator();
         while (it.hasNext()) {
             preg = it.next();
-            if (preg.getCategoria().getDificultad().equals("Muy Facil")) {
+            if (preg.getCategoria().getDificultad().getNivel().equals("Muy Facil")) {
                 lista.add(preg);
             }
 
@@ -181,29 +188,31 @@ public class ctrlquestions {
     public preguntas pregunta2() {
 
         int cantidadpregs = listapreguntasfaciles().size();
-        preguntas preguntaelegida = listapreguntasfaciles().get((int) (Math.random() * cantidadpregs + 1));
+          int numero_random=(int) (Math.random() * cantidadpregs + 0);
+        preguntas preguntaelegida = listapreguntasfaciles().get(numero_random);
 
         return preguntaelegida;
     }
   public preguntas pregunta3() {
 
         int cantidadpregs = listapreguntasmedio().size();
-        preguntas preguntaelegida =listapreguntasmedio().get((int) (Math.random() * cantidadpregs + 1));
+          int numero_random=(int) (Math.random() * cantidadpregs + 0);
+        preguntas preguntaelegida =listapreguntasmedio().get(numero_random);
 
         return preguntaelegida;
     }
   public preguntas pregunta4() {
 
         int cantidadpregs = listapreguntasdificil().size();
-        preguntas preguntaelegida =listapreguntasdificil().get((int) (Math.random() * cantidadpregs + 1));
+        int numero_random=(int) (Math.random() * cantidadpregs + 0);
+        preguntas preguntaelegida =listapreguntasdificil().get(numero_random);
 
         return preguntaelegida;
     }
   public preguntas pregunta5() {
-
         int cantidadpregs = listapreguntasmuydificil().size();
-        preguntas preguntaelegida =listapreguntasmuydificil().get((int) (Math.random() * cantidadpregs + 1));
-
+        int numero_random=(int) (Math.random() * cantidadpregs + 0);
+        preguntas preguntaelegida =listapreguntasmuydificil().get(numero_random);
         return preguntaelegida;
     }
 

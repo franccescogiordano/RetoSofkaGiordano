@@ -125,7 +125,7 @@ public class preguntas implements Serializable {
 
     @Override
     public String toString() {
-        return "CLASES.preguntas[ id=" + id + " ]";
+        return pregunta;
     }
     
 }
