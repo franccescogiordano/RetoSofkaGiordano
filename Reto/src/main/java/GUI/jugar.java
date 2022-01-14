@@ -27,18 +27,18 @@ public class jugar extends javax.swing.JFrame {
     /**
      * Creates new form jugar
      */
-    private int rondasjugadas;
     public static rondas ronda = null;
     public static participa participacion = null;
     public static preguntas preg = null;
     public static jugador playeractual = new jugador();
     public static List<participa> participacionesdeljugador = new ArrayList<participa>();
     ctrlquestions CQ = new ctrlquestions();
-    int puntos;
+    int puntos = 0;
     boolean siguientepressed = false;
+
     public jugar(jugador player) {
         initComponents();
-
+        puntos = 0;
         ronda = new rondas();
         ronda.setNumero_rondas(5);
         ronda.setRonda_actual(1);
@@ -52,7 +52,7 @@ public class jugar extends javax.swing.JFrame {
     }
 
     public void chekearrespuesta(JRadioButton radiobtm) {
-        
+        boolean respuestacorrecta = false;
         respuesta1.setEnabled(false);
         respuesta2.setEnabled(false);
         respuesta3.setEnabled(false);
@@ -62,47 +62,108 @@ public class jugar extends javax.swing.JFrame {
 
         ronda.setPartipacion(participacion);
         if (radiobtm.getText().equals(preg.getRespuestac())) {
+            respuestacorrecta = true;
+            if (ronda.getRonda_actual() == 1) {
+                participacion.setPremioronda(100);
+                acumularpuntos(100);
+            } else if (ronda.getRonda_actual() == 2) {
+                participacion.setPremioronda(200);
+                acumularpuntos(200);
+            } else if (ronda.getRonda_actual() == 3) {
+                participacion.setPremioronda(300);
+                acumularpuntos(300);
+            } else if (ronda.getRonda_actual() == 4) {
+                participacion.setPremioronda(400);
+                acumularpuntos(400);
+            } else if (ronda.getRonda_actual() == 5) {
+                participacion.setPremioronda(500);
+                acumularpuntos(500);
+            }
             jLabelRespuesta.setText("Correcta");
             participacion.setEstadoronda("Gano");
         } else {
+            respuestacorrecta = false;
             jLabelRespuesta.setText("Incorrecta, la respuesta correcta era: " + preg.getRespuestac());
             participacion.setEstadoronda("Perdio");
-        }
+            bloqueartodo();
+            participacion.setPreguntaronda(preg.toString());
+            participacion.setRespuestaEelegida(radiobtm.getText());
+            participacion.setRespuestaC(preg.getRespuestac());
+            participacion.setRondajugada(ronda);
+            participacion.setParticipante(playeractual);
+            int rondasjugadas = playeractual.getRondasjugadas();
+            playeractual.setRondasjugadas(rondasjugadas + 1);
+            if (playeractual.getParticipaciones().isEmpty()) {
+                playeractual.setParticipaciones(participacionesdeljugador);
+            } else {
+                participacionesdeljugador = playeractual.getParticipaciones();
+                participacionesdeljugador.add(participacion);
+                playeractual.setParticipaciones(participacionesdeljugador);
 
-        participacion.setPreguntaronda(preg.toString());
-        participacion.setRespuestaEelegida(radiobtm.getText());
-        if (ronda.getRonda_actual() == 1) {
-            participacion.setPremioronda(100);
-        } else if (ronda.getRonda_actual() == 2) {
-            participacion.setPremioronda(200);
-        } else if (ronda.getRonda_actual() == 3) {
-            participacion.setPremioronda(300);
-        } else if (ronda.getRonda_actual() == 4) {
-            participacion.setPremioronda(400);
-        } else if (ronda.getRonda_actual() == 5) {
-            participacion.setPremioronda(500);
+            }
+            findeljuego();
         }
-        participacion.setRondajugada(ronda);
-        participacion.setParticipante(playeractual);
-        puntos = playeractual.getPuntos();
-        playeractual.setPuntos(puntos + participacion.getPremioronda());
-        if (playeractual.getParticipaciones().isEmpty()) {
-            playeractual.setParticipaciones(participacionesdeljugador);
-        } else {
-            participacionesdeljugador = playeractual.getParticipaciones();
-            participacionesdeljugador.add(participacion);
-            playeractual.setParticipaciones(participacionesdeljugador);
+        if (respuestacorrecta) {
 
+            int rondasjugadas = playeractual.getRondasjugadas();
+            playeractual.setRondasjugadas(rondasjugadas + 1);
+            //  playeractual.setPuntos(puntos + participacion.getPremioronda());
+            if (playeractual.getParticipaciones().isEmpty()) {
+                playeractual.setParticipaciones(participacionesdeljugador);
+            } else {
+                participacionesdeljugador = playeractual.getParticipaciones();
+                participacionesdeljugador.add(participacion);
+                playeractual.setParticipaciones(participacionesdeljugador);
+
+            }
+
+            CPrincipal.getInstance().merge(ronda);
+            CPrincipal.getInstance().merge(participacion);
+            CPrincipal.getInstance().merge(playeractual);
+            if (ronda.getRonda_actual() == 5) {
+                //end game
+
+            }
         }
+    }
 
-        CPrincipal.getInstance().merge(ronda);
-        CPrincipal.getInstance().merge(participacion);
+    public void findeljuego() {
+        int puntosactuales;
+        puntosactuales = playeractual.getPuntos();
+        playeractual.setPuntos(puntos + puntosactuales);
         CPrincipal.getInstance().merge(playeractual);
+        //  CPrincipal.getInstance().refresh(playeractual);
+        menuprincipal menuprincipal = new menuprincipal(playeractual);
+        menuprincipal.setVisible(true);
+        this.dispose();
+    }
+
+    public void bloqueartodo() {
+        siguientepressed = true;
+        nextround.setEnabled(false);
+
+        respuesta1.setEnabled(false);
+        respuesta2.setEnabled(false);
+        respuesta3.setEnabled(false);
+        respuesta4.setEnabled(false);
+        respuesta1.setSelected(false);
+        respuesta2.setSelected(false);
+        respuesta3.setSelected(false);
+        respuesta4.setSelected(false);
+        siguientepressed = false;
 
     }
 
     private jugar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void acumularpuntos(int premio) {
+        puntos = puntos + premio;
+        String puntosstr;
+        puntosstr = String.valueOf(puntos);
+        acumuladotxt.setText(puntosstr);
+
     }
 
     private List desordenadossinrepetir(String[] respuestas) {
@@ -149,31 +210,34 @@ public class jugar extends javax.swing.JFrame {
         }
 
     }
-public void activarbotones(){
-    
-    nextround.setEnabled(false);
-    
-    respuesta1.setEnabled(true);
-    respuesta2.setEnabled(true);
-    respuesta3.setEnabled(true);
-    respuesta4.setEnabled(true);
-    respuesta1.setSelected(false);
-    respuesta2.setSelected(false);
-    respuesta3.setSelected(false);
-    respuesta4.setSelected(false);
-    siguientepressed=false;
-            
-}
+
+    public void activarbotones() {
+
+        nextround.setEnabled(false);
+
+        respuesta1.setEnabled(true);
+        respuesta2.setEnabled(true);
+        respuesta3.setEnabled(true);
+        respuesta4.setEnabled(true);
+        respuesta1.setSelected(false);
+        respuesta2.setSelected(false);
+        respuesta3.setSelected(false);
+        respuesta4.setSelected(false);
+        siguientepressed = false;
+
+    }
+
     public void pasarsiguienteronda() {
-        activarbotones();
-      
-        int num = ronda.getRonda_actual();
         if (ronda.getRonda_actual() < 5) {
+            activarbotones();
+            jLabelRespuesta.setText("");
+            int num = ronda.getRonda_actual();
+
             rondas rondanueva = new rondas();
             ronda = rondanueva;
             participacion = new participa();
             ronda.setNumero_rondas(5);
-            
+
             participacion = new participa();
             preg = new preguntas();
             preg = CQ.pregunta1();
@@ -181,32 +245,34 @@ public void activarbotones(){
                 case 1:
                     ronda.setRonda_actual(2);
                     preg = CQ.pregunta2();
-                      jLabel6.setText("2");
+                    jLabel6.setText("2");
                     rellenarcampos(preg);
                     break;
                 case 2:
-                     ronda.setRonda_actual(3);
-                      jLabel6.setText("3");
+                    ronda.setRonda_actual(3);
+                    jLabel6.setText("3");
                     preg = CQ.pregunta3();
-                     rellenarcampos(preg);
+                    rellenarcampos(preg);
                     break;
                 case 3:
                     ronda.setRonda_actual(4);
-                     jLabel6.setText("4");
+                    jLabel6.setText("4");
                     preg = CQ.pregunta4();
                     rellenarcampos(preg);
                     break;
 
                 case 4:
                     ronda.setRonda_actual(5);
-                     jLabel6.setText("5");
-                    preg = CQ.pregunta5(); 
+                    jLabel6.setText("5");
+                    preg = CQ.pregunta5();
                     rellenarcampos(preg);
                     break;
                 default:
                     break;
             }
-            
+
+        } else {
+            findeljuego();
         }
     }
 
@@ -232,6 +298,8 @@ public void activarbotones(){
         jLabel7 = new javax.swing.JLabel();
         jLabelRespuesta = new javax.swing.JLabel();
         nextround = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        acumuladotxt = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -307,22 +375,35 @@ public void activarbotones(){
             }
         });
 
+        jButton1.setText("Terminar juego");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        acumuladotxt.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(nextround))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addComponent(jLabel4)
-                        .addGap(278, 278, 278)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(acumuladotxt)
+                        .addGap(231, 231, 231)
                         .addComponent(jLabel3)
-                        .addGap(0, 176, Short.MAX_VALUE)))
-                .addGap(113, 113, 113))
+                        .addGap(0, 137, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(nextround)))
+                .addGap(152, 152, 152))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -361,7 +442,8 @@ public void activarbotones(){
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(acumuladotxt))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -377,7 +459,9 @@ public void activarbotones(){
                     .addComponent(labelrespuesta)
                     .addComponent(jLabelRespuesta))
                 .addGap(44, 44, 44)
-                .addComponent(nextround)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nextround)
+                    .addComponent(jButton1))
                 .addGap(17, 17, 17))
         );
 
@@ -395,41 +479,47 @@ public void activarbotones(){
     }//GEN-LAST:event_respuesta1StateChanged
 
     private void respuesta1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_respuesta1ItemStateChanged
-        if(!siguientepressed){
-        chekearrespuesta(respuesta1);
-         nextround.setEnabled(true);
+        if (!siguientepressed) { //si es false
+            chekearrespuesta(respuesta1);
+            nextround.setEnabled(true);
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_respuesta1ItemStateChanged
 
     private void nextroundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextroundActionPerformed
-     siguientepressed = true;
-    pasarsiguienteronda();
+        siguientepressed = true;
+        pasarsiguienteronda();
     }//GEN-LAST:event_nextroundActionPerformed
 
     private void respuesta2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_respuesta2ItemStateChanged
-        if(!siguientepressed){
-        chekearrespuesta(respuesta2);
-         nextround.setEnabled(true);
+        if (!siguientepressed) {
+            chekearrespuesta(respuesta2);
+            nextround.setEnabled(true);
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_respuesta2ItemStateChanged
 
     private void respuesta3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_respuesta3ItemStateChanged
-  if(!siguientepressed){
-        chekearrespuesta(respuesta3);
-   nextround.setEnabled(true);
+        if (!siguientepressed) {
+            chekearrespuesta(respuesta3);
+            nextround.setEnabled(true);
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_respuesta3ItemStateChanged
 
     private void respuesta4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_respuesta4ItemStateChanged
-  if(!siguientepressed){
-        chekearrespuesta(respuesta4);
-   nextround.setEnabled(true);
+        if (!siguientepressed) {
+            chekearrespuesta(respuesta4);
+            nextround.setEnabled(true);
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_respuesta4ItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        bloqueartodo();
+        findeljuego();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -466,6 +556,8 @@ public void activarbotones(){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel acumuladotxt;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -210,11 +210,9 @@ public class ctrlquestions {
         return preguntaelegida;
     }
   public preguntas pregunta5() {
-
         int cantidadpregs = listapreguntasmuydificil().size();
         int numero_random=(int) (Math.random() * cantidadpregs + 0);
         preguntas preguntaelegida =listapreguntasmuydificil().get(numero_random);
-
         return preguntaelegida;
     }
 

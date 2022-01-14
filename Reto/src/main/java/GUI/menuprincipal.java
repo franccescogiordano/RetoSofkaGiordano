@@ -6,6 +6,7 @@
 package GUI;
 
 import CLASES.jugador;
+import PERSISTENCIA.CPrincipal;
 
 /**
  *
@@ -25,6 +26,7 @@ public class menuprincipal extends javax.swing.JFrame {
         puntoslb.setText(String.valueOf(player.getPuntos()));
     
         String rondasjugadas = String.valueOf(player.getRondasjugadas());
+        
         rondasjugadaslb.setText(rondasjugadas);
     }
     

@@ -319,7 +319,7 @@ public class main extends javax.swing.JFrame {
 
         //MUY DIFICILES ---------------------------------------------------------------------------
         Ciencia = new categorias();
-        Ciencia.setDificultad(Dificil);
+        Ciencia.setDificultad(MuyDificil);
         Ciencia.setDescripcion("Preguntas sobre Ciencia");
 
         CPrincipal.getInstance().persist(Ciencia);
@@ -498,7 +498,7 @@ public class main extends javax.swing.JFrame {
             menuprincipal menu = new menuprincipal(player);
             menu.setVisible(true);
             //  usuariologeado = player;
-            this.setVisible(false);
+            this.dispose();
 
         }
         // TODO add your handling code here:
